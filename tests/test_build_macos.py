@@ -1,4 +1,4 @@
-"""检查本地化生成过程中 ID、编码和未修改文字的完整性。"""
+"""Check that localization generation preserves IDs, encoding, and unchanged text."""
 
 import copy
 import hashlib
@@ -14,21 +14,21 @@ build_localization = runpy.run_path(
 
 class LocalizationTests(unittest.TestCase):
     def setUp(self):
-        self.source = "1\tOriginal\\nLine\r\n2\t保留原文\r\n".encode("utf-16")
+        self.source = "1\tOriginal\\nLine\r\n2\tUnchanged café\r\n".encode("utf-16")
         self.manifest = {
             "source": {"english_sha256": hashlib.sha256(self.source).hexdigest()},
             "corrections": [{
                 "id": "1",
                 "before": "Original\\nLine",
                 "after": "Corrected\\nLine",
-                "reason": "属性核对",
+                "reason": "Attribute verification",
                 "evidence": [{"file": "unit.rgd", "field": "armor", "value": 270}],
             }],
         }
 
     def test_preserves_ids_unicode_literal_newlines_and_crlf(self):
         output = build_localization(self.source, self.manifest)
-        self.assertEqual(output, "1\tCorrected\\nLine\r\n2\t保留原文\r\n".encode("utf-16"))
+        self.assertEqual(output, "1\tCorrected\\nLine\r\n2\tUnchanged café\r\n".encode("utf-16"))
 
     def test_rejects_changed_source(self):
         with self.assertRaises(AssertionError):

@@ -1,4 +1,4 @@
-"""只读导出 CoH2 SGA v7 属性；字典使用 Cope RGDTools 的 hash_dict.txt。"""
+"""Export CoH2 SGA v7 attributes using Cope RGDTools' hash_dict.txt without modifying the archive."""
 
 import argparse
 import collections
