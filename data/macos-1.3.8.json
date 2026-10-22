@@ -151,6 +151,62 @@
       ]
     },
     {
+      "id": "11009062",
+      "before": "[BT: 35s] Effective against infantry and support weapons.\\nSight: 38,48 (at Vet2) / Range: 50 / Camouflage III",
+      "after": "[BT: 35s] Effective against infantry and support weapons.\\nSight: 40,50 (at Vet2) / Range: 50 / Camouflage III",
+      "reason": "The standard multiplayer sniper entity has base sight 40. Veterancy 2 multiplies sight by 1.25, giving 50. Its initialization actions and equipped slot items apply no sight reduction.",
+      "evidence": [
+        {
+          "file": "attrib/ebps/races/german/soldiers/sniper/sniper_soldier_mp.rgd",
+          "field": "sight_ext.sight_package.outer_radius",
+          "value": 40.0
+        },
+        {
+          "file": "attrib/sbps/races/german/soldiers/sniper_squad/sniper_squad_mp.rgd",
+          "field": "squad_veterancy_ext.race_list.0x9e1607e9.info.veterancy_rank_info.veterancy_rank#2.squad_actions.apply_modifiers_action.modifiers.sight_radius_modifier",
+          "value": {
+            "positive_tooltip": 11001839,
+            "value": 1.25,
+            "negative_tooltip": 11001826,
+            "target_type_name": "",
+            "application_type": "apply_to_squad",
+            "$REF": "modifiers\\sight_radius_modifier.lua",
+            "usage_type": "multiplication",
+            "exclusive": false,
+            "modifier_id": ""
+          }
+        }
+      ]
+    },
+    {
+      "id": "11009065",
+      "before": "[BT: 35s] Effective against infantry and support weapon teams.\\nSight: 38,48 (at Vet2) / Range: 50 / Camouflage III",
+      "after": "[BT: 35s] Effective against infantry and support weapon teams.\\nSight: 40,50 (at Vet2) / Range: 50 / Camouflage III",
+      "reason": "The standard multiplayer sniper entity has base sight 40. Veterancy 2 multiplies sight by 1.25, giving 50. Its initialization actions and equipped slot items apply no sight reduction.",
+      "evidence": [
+        {
+          "file": "attrib/ebps/races/soviet/soldiers/sniper/sniper_mp.rgd",
+          "field": "sight_ext.sight_package.outer_radius",
+          "value": 40.0
+        },
+        {
+          "file": "attrib/sbps/races/soviet/soldiers/sniper_team/sniper_team_mp.rgd",
+          "field": "squad_veterancy_ext.race_list.0x9e1607e9.info.veterancy_rank_info.veterancy_rank#2.squad_actions.apply_modifiers_action.modifiers.sight_radius_modifier",
+          "value": {
+            "positive_tooltip": 11001839,
+            "value": 1.25,
+            "negative_tooltip": 11001826,
+            "target_type_name": "",
+            "application_type": "apply_to_squad",
+            "$REF": "modifiers\\sight_radius_modifier.lua",
+            "usage_type": "multiplication",
+            "exclusive": false,
+            "modifier_id": ""
+          }
+        }
+      ]
+    },
+    {
       "id": "11025916",
       "before": "Infantry in cover can camouflage themselves from enemies.\\nAmbushing enemy units while camouflaged will increase the squads accuracy by 25 % for 5 seconds. (50 % for Panzergrenadiers).",
       "after": "Infantry in cover can camouflage themselves from enemies.\\nAttacking from camouflage grants + 50 % accuracy for 5 seconds.",
@@ -4055,6 +4111,34 @@
       "evidence": "attrib/sbps/races/german/vehicles/panzer_iv_squad/panzer_iv_ausf_j_ostheer_mp.rgd / squad_veterancy_ext, rank screen_name=11075595: [{\"value\": 0.699999988079071, \"target_type_name\": \"hardpoint_01\", \"$REF\": \"modifiers\\\\reload_weapon_modifier.lua\", \"usage_type\": \"multiplication\"}]"
     },
     {
+      "id": "11083367",
+      "before": "[BT: 35s] Effective at long range vs infantry.\\nSight: 35,40 [with 'Pyrotechnics Supplies' Upgrade] / (De)/capture rate: 1.15 ",
+      "after": "[BT: 35s] Effective at long range vs infantry.\\nSight: 35,42 [with 'Pyrotechnics Supplies' Upgrade] / (De)/capture rate: 1.15 ",
+      "reason": "Infantry Sections have base sight 35. Pyrotechnics adds 7 sight to the squad, giving 42; both standard and flame-variant squad references use the same base entity.",
+      "evidence": [
+        {
+          "file": "attrib/ebps/races/british/soldiers/tommy/tommy_mp.rgd",
+          "field": "sight_ext.sight_package.outer_radius",
+          "value": 35.0
+        },
+        {
+          "file": "attrib/upgrade/british/items/tommy_pyrotechnics_supplies.rgd",
+          "field": "upgrade_bag.actions.apply_modifiers_action.modifiers.sight_radius_modifier",
+          "value": {
+            "positive_tooltip": 11001839,
+            "value": 7.0,
+            "negative_tooltip": 11001826,
+            "target_type_name": "",
+            "application_type": "apply_to_squad",
+            "$REF": "modifiers\\sight_radius_modifier.lua",
+            "usage_type": "addition",
+            "exclusive": false,
+            "modifier_id": ""
+          }
+        }
+      ]
+    },
+    {
       "id": "11083370",
       "before": "[BT: 40s] Transport unit. Anti-infantry Upgrades. Gains shared veterancy.\\nSight: 35,42 (at Vet1) / Pen: 2-1.8 [4-2] / Armor: 6;4 / HP: 240 / Range: 35,40 (Vickers)",
       "after": "[BT: 40s] Transport unit. Anti-infantry Upgrades. Gains shared veterancy.\\nSight: 35,42 (at Vet1) / Pen: 2-1.8 [4-2] / Armor: 5.8;4.1 / HP: 240 / Range: 35,40 (Vickers)",
@@ -4092,8 +4176,8 @@
     {
       "id": "11083378",
       "before": "[BT: 35s] Effective against infantry and light armor.\\nSight: 38,48 (at Vet2) / Damage: 60 / Penetration: 100,85,70 / Range: 50 / Camouflage III",
-      "after": "[BT: 35s] Effective against infantry and light armor.\\nSight: 38,48 (at Vet2) / Damage: 40 / Penetration: 100,85,70 / Range: 50 / Camouflage III",
-      "reason": "The British sniper rifle has 40 base damage; the entity's initialization actions grant no damage bonus, and the damage multiplier of 2 applies only at veterancy 3.",
+      "after": "[BT: 35s] Effective against infantry and light armor.\\nSight: 40,50 (at Vet2) / Damage: 40 / Penetration: 100,85,70 / Range: 50 / Camouflage III",
+      "reason": "The British sniper rifle has 40 base damage; the entity's initialization actions grant no damage bonus, and the damage multiplier of 2 applies only at veterancy 3. The standard multiplayer sniper entity has base sight 40. Veterancy 2 multiplies sight by 1.25, giving 50. Its initialization actions and equipped slot items apply no sight reduction.",
       "evidence": [
         {
           "file": "attrib/weapon/british/ballistic_weapon/infantry_anti_tank_weapon/boys_at_rifle_sniper_mp.rgd",
@@ -4104,6 +4188,26 @@
           "file": "attrib/weapon/british/ballistic_weapon/infantry_anti_tank_weapon/boys_at_rifle_sniper_mp.rgd",
           "field": "weapon_bag.damage.max",
           "value": 40.0
+        },
+        {
+          "file": "attrib/ebps/races/british/soldiers/sniper/sniper_british_mp.rgd",
+          "field": "sight_ext.sight_package.outer_radius",
+          "value": 40.0
+        },
+        {
+          "file": "attrib/sbps/races/british/soldiers/sniper_squad/sniper_british_squad_mp.rgd",
+          "field": "squad_veterancy_ext.race_list.0x9e1607e9.info.veterancy_rank_info.veterancy_rank#2.squad_actions.apply_modifiers_action.modifiers.sight_radius_modifier",
+          "value": {
+            "positive_tooltip": 11001839,
+            "value": 1.25,
+            "negative_tooltip": 11001826,
+            "target_type_name": "",
+            "application_type": "apply_to_squad",
+            "$REF": "modifiers\\sight_radius_modifier.lua",
+            "usage_type": "multiplication",
+            "exclusive": false,
+            "modifier_id": ""
+          }
         }
       ]
     },

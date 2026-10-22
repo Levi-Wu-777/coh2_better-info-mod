@@ -115,7 +115,7 @@ If you want to restore the file:
 
 ## macOS 1.3.8 correction pack
 
-This fork adds an English correction pack for the native Feral Mac port, version 1.3.8 (build 306362.56045), using local game attributes as evidence. It corrects 180 descriptions without changing gameplay attributes.
+This fork adds an English correction pack for the native Feral Mac port, version 1.3.8 (build 306362.56045), using local game attributes as evidence. It corrects 183 descriptions without changing gameplay attributes.
 
 ### Mac installation
 
