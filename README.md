@@ -1,114 +1,42 @@
-# Company of Heroes 2 - Better-Info-Mod
+# Better Info Mod · macOS 1.3.8
 
-Project
-------
+为《英雄连2》Feral Mac 版 1.3.8（build 306362.56045）校正英文数值说明；当前修正180条，只修改显示文字，不改变游戏属性。
 
-> The "mod" is basically just a rewritten text file. Each text entry in the game has a unique key ID in that text file, and the associated text has been edited to be actually useful.
-> 
-> Company of Heroes 2 is a game full of units, abilities and mechanics. However, the UI's explanation of these is often vague or outdated. This leads to the fact that hardly anyone looks at the descriptions more than once, and those who want to know more details has to do research outside the game with sources that are often outdated themselves.
-> 
-> The mod takes descriptions of abilities, veterancy changes, units, build time, upgrades, aura buffs, damage dealt, etc. and replaces them with the most accurate, comprehensible values possible.
-> 
-> Now you will get accurate and actually helpful information by hovering your mouse over the respective icon, veteran star or unit descriptions in the lower part of the screen.
-> 
-> Here are some examples:
-> 
-> ![Better-Info-Mod Image 01](https://www.coh2.org/file/20468/coh2-betterinfmod-02.png)
-> 
-> ![Better-Info-Mod Image 02](https://www.coh2.org/file/20469/coh2-betterinfmod-03.png)
-> 
-> ![Better-Info-Mod Image 03](https://www.coh2.org/file/20470/coh2-betterinfmod-04.png)
-> 
-> ![Better-Info-Mod Image 04](https://www.coh2.org/file/20471/coh2-betterinfmod-05.png)
-> 
-> **What are the modification?**
-> 
-> - Shows more detailed unit veterancy descriptions (i.e. an up-to-date *Numerical Veterancy Description Mod* - See section below).
-> - For vehicles, shows armor values, health points and weapon range (if beyond default). Also shows damage and penetration (near-far) values for tanks.
-> - For team weapons, shows penetration and range. Also shows damage and Penetration for artillery, mortars and anti-tank guns.
-> - Additional detailed descriptions for most skills, commander abilities, upgrades and aura buffs (small portrait icons).
-> - Shows the sight range of infantry and light vehicles (if beyond default 35m Range).
-> - Shows the repair rates of engineers and and their upgrades (minesweepers, etc.).
-> - Shows explosive damage of mines, snares and anti-tank weapons. It also shows the penetration of anti-tank weapons used by infantry.
-> - Shows the (de)capture rate (if higher than 1.0) for infantry and light vehicles.
-> - Shows build times for tech upgrades and base buildings.
+## 文件
 
-[Source](https://www.coh2.org/news/110870/better-info-mod)
+- `macos/RelicCoH2.English.ucs`：可安装的 Mac 英文校正版。
+- `data/macos-1.3.8.json`：校正前后文字、本机属性证据、版本与哈希、待确认条目。
+- `tools/`：校正版生成、验证与 SGA v7 属性提取工具。
+- `tests/`：本地化文件完整性检查。
+- 根目录 `.ucs`：上游文件；英文和德文同步正式 v1.2 发布包。其他语言保持上游状态，尚未校正。
+- `src/`：上游保留的原始本地化文件。
 
-**Numerical Veterancy Description Mod**
+## 安装
 
-> Have you ever wanted to know the numerical veterancy bonuses in game, without going to the [COH2.ORG guide](https://www.coh2.org/guides/29892/the-company-of-heroes-2-veterancy-guide)? Yeah! It's great that my rifleman receives `...more experience from extensive combat, increasing weapon lethality, increased durability, reducing ability recharge, and increasing ability range`, but how much exactly? I am glad that my riflemen got so much out of their extensive combat, but I WANT NUMBERS.
->
-> Now you can get exact numbers in game with this great mod. It works in automatch too! With this mod, no more colourful and vague descriptions - only straight talk!
->
-> ![Numerical Veterancy Description Image](https://www.coh2.org/file/13006/veterancy.jpg)
+退出游戏，在 Steam 中浏览《英雄连2》的本地文件，进入 `CompanyOfHeroes2Data/coh2/locale/english/`。先备份该目录中的 `reliccoh2.english.ucs`，再用本仓库 `macos/RelicCoH2.English.ucs` 替换它，保持目标文件名。
 
-[Source](https://www.coh2.org/news/58454/numerical-veterancy-description)
+本版本面向 Mac 原生版原版多人规则。战役、战区、改变平衡的模组、Windows/Wine 版和其他语言不在已核对范围。待确认项详见校正清单；没有进行游戏内逐项实测。
 
-Feedback? Contribution?
------------
+## 生成与验证
 
-If you find a typo/error, see information missing, have other suggestions, or want to help to translate the mod for another language, please don't hesitate to contact us. You can reach out in two ways:
+需要 Python 3，无额外 Python 依赖。
 
-- [CoHmmunity Germany Discord](https://discord.gg/zUJRw8juFk);
-- [Github](https://github.com/Mithiriath/coh2_better-info-mod/issues);
+```sh
+python3 tools/build_macos.py
+python3 tools/build_macos.py --check
+python3 -m unittest discover -s tests
+```
 
-Notation
------------
+需要重新读取本机属性时，从 [CoH2 Stats 使用的 RGDTools 包](https://raw.githubusercontent.com/cohstats/coh2stats/master/scripts/RGDTools_v1.3.7z) 提取 `hash_dict.txt`，再运行：
 
-- Armor: `<front>;<rear>`
-- Damage: `<penetration damage>`(`<deflection damage if exist>`)
-- Duration: `<duration of the ability>`
-- HP: `<hp>`
-- Penetration: `<same value at all range>`
-- Penetration: `<short>,<medium>,<long>` range
-- Penetration near-far: `<near>-<far>`
-- Range: `<max firing range>`
-- Range of aura: `<max aura range>`
-- Sight: `<range if different than the default 35 range>`
-- *: Means that the statistic of the unit increases when the unit gains veterancy.
+```sh
+python3 tools/extract_mac_attributes.py /path/to/attribarchive.sga /tmp/attributes.json --hash-dictionary /path/to/hash_dict.txt
+```
 
-Authors
------------
+工具只读 SGA，验证存储数据 CRC 和解压长度，并保留未知字段及重复数组项。不要把游戏属性完整导出或第三方字典提交到仓库。
 
-### Better-Info-Mod
+## 来源与致谢
 
-Thanks to jamesjamozo for the English and the German version.
+基于 [Mithiriath/coh2_better-info-mod](https://github.com/Mithiriath/coh2_better-info-mod) 的 [v1.2 正式发布包](https://github.com/Mithiriath/coh2_better-info-mod/releases/tag/v1.2)。感谢 Mithiriath、jamesjamozo、Elpern、Osinyagov 及原 Numerical Veterancy Description Mod 的 Sarantini、CookiezNcreem、Tobis、Harold、RussianHamster、Karotten Harry、3nder990。
 
-Thanks to Osinyagov for the Russian translation.
-
-### Numerical Veterancy Description Mod
-
-Thanks to Sarantini for making the [Veterancy Guide](https://www.coh2.org/guides/29892/the-company-of-heroes-2-veterancy-guide) in early 2015 and CookiezNcreem and Tobis for updating it.
-
-Thanks to Harold for being the first to come up with the [Numerical Veterancy Description Mod](https://www.coh2.org/topic/58241/numeral-veterancy-descriptions-english-localization-mod) in 2015.
-
-Thanks to Osinyagov and RussianHamster (aka XaMiaK) for the [Russian version](https://www.coh2.org/topic/60155/numeral-veterancy-descriptions-russian-localization-mod).
-
-Thanks to jamesjamozo and Karotten Harry for updating the English version and for the translation for the German version.
-
-Thanks to 3nder990 for the translation for the Spanish version.
-
-Download
------------
-
-You can dowload the mod [from github](https://github.com/Mithiriath/coh2_better-info-mod/releases).
-
-Click on the link above, *Assets* section, then click on *Source code (zip)*.
-
-[![Github Download Mod Procedure Image](https://www.coh2.org/file/20453/github-download-mod-procedure.png)](https://github.com/Mithiriath/coh2_better-info-mod/releases)
-
-Installation
------------
-
-* If CoH 2 is started, stop the game;
-* Go to your Steam Library and right-click CoH 2;
-* Click on *Properties...* -> *Local Files* -> *Browse...* to open your CoH 2 directory;
-* Go to the folder: *CoH2* -> *Locale* -> *English* (if you have your game in English. Czech/French/German/Italian/Polish/Russian/Spanish folder if you have your game in an other language);
-* Replace the file *RelicCoH2.English.ucs* (if you have your game in English) by the new file you downloaded;
-* If you have your game in Czech for example and want to use the *RelicCoH2.English.ucs* file from the mod, you can. You just copy *RelicCoH2.English.ucs* file in your *Czech* folder then rename it *RelicCoH2.Czech.ucs*.
-
-If you want to restore the file:
-* If CoH 2 is started, stop the game;
-* Go to your Steam Library and right-click CoH 2;
-* Click on *Properties...* -> *Local Files* -> *Verify integrity of game files...*;
+版本范围参考 [Feral 官方 Mac 更新说明](https://steamcommunity.com/app/231430/discussions/0/3040481757531253611/)；数值以该版本本机 `attribarchive.sga` 为依据。
