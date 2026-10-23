@@ -115,7 +115,7 @@ If you want to restore the file:
 
 ## macOS 1.3.8 correction pack
 
-This fork adds an English correction pack for the native Feral Mac port, version 1.3.8 (build 306362.56045), using local game attributes as evidence. It corrects 513 descriptions without changing gameplay attributes.
+This fork adds an English correction pack for the native Feral Mac port, version 1.3.8 (build 306362.56045), using local game attributes as evidence. It corrects 564 descriptions without changing gameplay attributes.
 
 ### Mac installation
 
@@ -126,8 +126,8 @@ The pack targets standard multiplayer rules. Campaigns, Theater of War, balance 
 ### Correction data and tools
 
 - [data/macos-1.3.8.json](data/macos-1.3.8.json) records original and corrected text, attribute evidence, version hashes, and unresolved cases.
-- [data/macos-1.3.8-audit.json](data/macos-1.3.8-audit.json) records the complete numerical audit inventory: 1,191 modified numerical texts plus 366 baseline candidates, per-component findings, source references, and runtime limits. Entries marked `needs_runtime` are not fully verified, even if a supported part was corrected or an unsupported number removed.
-- [tools/check_mac_evidence.py](tools/check_mac_evidence.py) checks recorded fields and production-time arithmetic against a fresh attribute export. It does not certify tooltip interpretation or engine behavior.
+- [data/macos-1.3.8-audit.json](data/macos-1.3.8-audit.json) records the complete numerical audit inventory: 1,191 modified numerical texts plus 366 baseline candidates, per-component findings, source references, and runtime limits. The `followup` section groups the original 150 pending IDs; each entry retains its specific remaining question. `current_text_status` describes the revised wording separately from unresolved mechanics. Entries marked `needs_runtime` are not fully verified, even if a supported part was corrected or an unsupported number removed.
+- [tools/check_mac_evidence.py](tools/check_mac_evidence.py) checks recorded fields, production-time arithmetic, audit text fingerprints, and optional SCAR/native executable source fingerprints. Source-byte matches do not certify the interpretation of engine behavior.
 - [tools/build_macos.py](tools/build_macos.py) generates the Mac file and verifies it against the correction manifest.
 - [tools/extract_mac_attributes.py](tools/extract_mac_attributes.py) exports local SGA v7 attributes without modifying the archive; it verifies CRCs and decompressed lengths and preserves unknown fields and repeated entries.
 - [tests/test_build_macos.py](tests/test_build_macos.py) checks localization integrity.
@@ -153,5 +153,7 @@ Do not commit complete game attribute exports or third-party dictionaries. The M
 To check the recorded evidence against the extracted attributes:
 
 ```sh
-python3 tools/check_mac_evidence.py /tmp/attributes.json
+python3 tools/check_mac_evidence.py /tmp/attributes.json --game-root "/path/to/Company of Heroes 2"
 ```
+
+The optional game folder checks recorded SCAR file hashes/excerpts and native x86_64 executable hashes/instruction bytes directly from the local installation. Complete game scripts, binaries, and disassembler dependencies are not included. These are static source observations; no in-game verification is implied.
